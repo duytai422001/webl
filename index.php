@@ -1,74 +1,111 @@
 <!DOCTYPE html>
 <html>
-    <head>
-<title>Insert data to PostgreSQL with php - creating a simple web application</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style>
-li {
-list-style: none;
-}
-</style>
+<head>
+	<title>Web ban hang</title>
+	
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<h1>INSERT DATA TO DATABASE</h1>
-<h2>Enter data into student table</h2>
-<ul>
-    <form name="InsertData" action="InsertData.php" method="POST" >
-<li>Student ID:</li><li><input type="text" name="StudentID" /></li>
-<li>Full Name:</li><li><input type="text" name="fname" /></li>
-<li>Email:</li><li><input type="text" name="email" /></li>
-<li>Class:</li><li><input type="text" name="classname" /></li>
-<li><input type="submit" /></li>
-</form>
-</ul>
 
-<?php
+	<header>
+    <div class="container">
+    	<div class="menu">
+    		<ul>
+    			<li class="logo"><img src="./Img/img/T.jpg"></li>
+    			<li> <a href="index.html"class="current">Home</a></li>
+                        <li class="cart"><a href="cart.html" target="blank"><img src="./Img/img/cart.png"></a></li>
+                <li><form>
+          <input type="email" placeholder="Enter ...">
+          <button type="submit" class="button_1">Search</button>
+        </form></li>
+    			<li><a href="Login.html" target="blank" class="signup"><span>Sign Up</span></a></li>
+                
+    		</ul>
+    	</div>
+        <div class="cc">
+    <a href="Updatedata.php">Update</a>
+</div>
+<div class="cc">
+    <a href="Insertdata.php">Insert</a>
+</div>
+<div class="cc">
+    <a href="Deletedata.php">Delete</a>
+</div>
+<div>
+    <a href="connect.php" target="_blank" >Connect database</a>
+</div>
+    	</div>
+     </div>
+    </header>
+    <nav>
+        <ul>
+        <li class="Iphone">
+        <a href="Iphone.html"target="blank">Iphone</a> 
+        </li>
+       <li class="Applewatch">
+        <a href="Applewatch.html"target="blank">Apple Watch</a> 
+       </li> 
+      <li class="MacBook"><a href="MacBook.html"target="blank">MacBook</a> 
+        </li>
+        </ul>
+    </nav>		
+    
 
-if (empty(getenv("DATABASE_URL"))){
-    echo '<p>The DB does not exist</p>';
-    $pdo = new PDO('pgsql:host=localhost;port=5432;dbname=mydb', 'postgres', '123456');
-}  else {
-     
-   $db = parse_url(getenv("DATABASE_URL"));
-   $pdo = new PDO("pgsql:" . sprintf(
-         "host=
-ec2-35-172-73-125.compute-1.amazonaws.com;port=5432;user=pjoiauifkxswqj;password=edb5d969df8a92565b1c01bfab6951f9b274f9932f65890a956075a851fb5537;dbname=d1npqme909i19a",
-        $db["host"],
-        $db["port"],
-        $db["user"],
-        $db["pass"],
-        ltrim($db["path"], "/")
-   ));
-}  
+    	
+    		<div class="container1">
+    	<div class="box1">
+    		<a href="MacBook.html"target="blank">
+    		<img src="./Img/img/laptop.png">
+    		</a>
+    		<h3>MacBook</h3>
+    		
+    	</div>
+    	<div class="box2">
+    		<a href="Iphone.html"target="blank">
+    		<img src="./Img/img/iphone.png" >
+    		</a>
+    		<h3>Iphone</h3>
+    		
+    	</div>
+    	<div class="box3">
+    		<a href="Applewatch.html"target="blank">
+    		<img src="./Img/img/watch.png" >
+    		</a>
+    		<h3>Apple Watch</h3>
+    		
+    	</div>
+    </div>
+       
+        <section class="text">
+        	<h1>Welcome to T shop</h1>
+           </section>
+        <footer>
+        	<div class="footer-copyright">
+        		<ul>
+        			<li>@copyright</li>
+        			<li>Taile</li>
+        			<li>GCD191010</li>
+        		</ul>
+        	</div>
+        	<div class="footer-link"> 
+        		<ul>
+        			<li><a href="https://www.facebook.com/">Facebook</a></li>
+        			<li><a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox">Gmail</a></li>
+        			<li><a href="https://www.instagram.com/">Instagram</a></li>
+        		</ul>
+        	</div>
+        	<div class="footer-about"> 
+                <ul>
+                    <li>From Da Nang city</li>
+                    <li>Greenwich University</li>
+                    <li>GCD0705</li>
+                </ul>
+            </div>
+            </footer>
 
-if($pdo === false){
-     echo "ERROR: Could not connect Database";
-}
+   
 
-//Khởi tạo Prepared Statement
-//$stmt = $pdo->prepare('INSERT INTO student (stuid, fname, email, classname) values (:id, :name, :email, :class)');
 
-//$stmt->bindParam(':id','SV03');
-//$stmt->bindParam(':name','Ho Hong Linh');
-//$stmt->bindParam(':email', 'Linhhh@fpt.edu.vn');
-//$stmt->bindParam(':class', 'GCD018');
-//$stmt->execute();
-//$sql = "INSERT INTO student(stuid, fname, email, classname) VALUES('SV02', 'Hong Thanh','thanhh@fpt.edu.vn','GCD018')";
-$sql = "INSERT INTO product(productid, productname,sizes, basicprice,residual)"
-        . " VALUES('$_POST[productid]','$_POST[productname]','$_POST[sizes]','$_POST[basicprice]','$_POST[residual]'";
-$stmt = $pdo->prepare($sql);
-//$stmt->execute();
- if (is_null($_POST[StudentID])) {
-   echo "StudentID must be not null";
- }
- else
- {
-    if($stmt->execute() == TRUE){
-        echo "Record inserted successfully.";
-    } else {
-        echo "Error inserting record: ";
-    }
- }
-?>
 </body>
 </html>
+
